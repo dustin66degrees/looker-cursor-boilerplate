@@ -1,0 +1,6 @@
+﻿---
+description: LookML Visibility and Best Practices
+globs: ["*.lkml"]
+---
+- NEVER use the `hidden: yes` parameter on individual LookML fields unless explicitly requested by the user.
+- Always use field sets (`explore_fields`) at the Explore level to manage field visibility and curate the field picker.

@@ -1,0 +1,4 @@
+﻿# CODEOWNERS for Looker / Data Team
+# Replace with your team's GitHub handles before enabling branch protection.
+
+* @<GITHUB_HANDLE_1> @<GITHUB_HANDLE_2> @<GITHUB_HANDLE_3>

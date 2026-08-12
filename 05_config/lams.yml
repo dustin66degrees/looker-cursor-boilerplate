@@ -1,0 +1,15 @@
+name: <project_name>
+
+# Starter LAMS rules for LookML projects.
+# Docs: https://looker-open-source.github.io/look-at-me-sideways/customizing-lams
+
+rule:
+  explore_join_relationship:
+    description: Explore joins must declare an explicit relationship
+    match: "$.file.*.explore.*.join.*"
+    expr_rule: |
+      ( !== ::match:relationship undefined )
+
+  E1: {}
+  E6: {}
+  F2: {}

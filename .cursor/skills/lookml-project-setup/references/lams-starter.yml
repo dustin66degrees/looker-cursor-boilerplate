@@ -1,0 +1,28 @@
+﻿name: <project_name>
+
+# Starter LAMS rules for <ORG_DISPLAY_NAME> LookML projects.
+# Docs: https://looker-open-source.github.io/look-at-me-sideways/customizing-lams
+#
+# Add rules incrementally as the team matures. Candidates for later:
+#   K7  - table-backed views declare exactly one primary_key
+#   F1  - no cross-view field references in SQL
+#   F3  - type: count measures specify filters
+#   F4  - non-hidden fields have descriptions
+#   W1  - block indentation
+
+rule:
+  # Project standard: all explore joins declare relationship (see lookml-explore skill)
+  explore_join_relationship:
+    description: Explore joins must declare an explicit relationship
+    match: "$.file.*.explore.*.join.*"
+    expr_rule: |
+      ( !== ::match:relationship undefined )
+
+  # Join sql_on must use ${view.field} substitution
+  E1: {}
+
+  # foreign_key joins must use many_to_one (or one_to_one for PK joins)
+  E6: {}
+
+  # Fields should not declare view_label (use explore join view_label instead)
+  F2: {}

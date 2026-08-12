@@ -1,0 +1,39 @@
+﻿---
+description: GitHub account, branch, and repository guardrails for client LookML work
+globs: "*"
+alwaysApply: true
+---
+
+# GitHub Guardrails
+
+When working in this repository or any `<GITHUB_ORG>` client repository:
+
+## Account validation (required before push or PR)
+
+- **Always use `<YOUR_GITHUB_HANDLE>`** for `gh`, `git push`, and GitHub MCP operations.
+- **Never use `<PERSONAL_GITHUB_HANDLE>`** for `<GITHUB_ORG>` or `<CLIENT_NAME>` work.
+- Before any git push or PR creation, verify the active account:
+  - Run `gh auth status`
+  - Confirm `<YOUR_GITHUB_HANDLE>` is the **active** account
+  - If not: `gh auth switch --user <YOUR_GITHUB_HANDLE>`
+
+## Repository validation
+
+- Confirm `git remote -v` points to the expected org/repo: `<GITHUB_ORG>/<REPO_NAME>`
+- Do not push to a fork or personal repo unless the user explicitly requests it
+- GitHub MCP credentials must come from `.cursor/github.env` in this repo (never personal or non-org tokens)
+
+## Branch conventions
+
+- **Default/base branch:** `<DEFAULT_BRANCH>` (typically `main`)
+- **Feature branches:** `feature/<short-description>` or `dev-<your-looker-handle>` (match your team's Looker dev branch naming)
+- **Never commit directly to `<DEFAULT_BRANCH>`** unless explicitly instructed
+- Before opening a PR, confirm your branch is up to date with `<DEFAULT_BRANCH>`
+
+## Pull request checklist
+
+1. `gh auth status` shows `<YOUR_GITHUB_HANDLE>`
+2. Branch name follows team conventions
+3. Remote is `<GITHUB_ORG>/<REPO_NAME>`
+4. LookML validates locally (LAMS) when applicable
+5. PR targets `<DEFAULT_BRANCH>` unless directed otherwise

@@ -1,0 +1,11 @@
+# Environment and credentials
+.env*
+.cursor/*.env
+!.cursor/*.env.example
+
+# Schema staging (optional — commit if your team tracks schemas in git)
+# schema_*.json
+
+# OS
+.DS_Store
+Thumbs.db

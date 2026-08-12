@@ -1,0 +1,47 @@
+﻿---
+description: Optional Jira workflow for ticket creation, linking, and PR comments
+globs: "*"
+alwaysApply: false
+---
+
+# Jira Workflow (Optional)
+
+Enable this rule (`alwaysApply: true`) after replacing placeholders below. Skip or delete if your project does not use Jira.
+
+## Connection & Auth
+
+- **Site:** `https://<ATLASSIAN_SITE>.atlassian.net`
+- **Project key:** `<JIRA_PROJECT_KEY>`
+- **Credentials:** `.cursor/atlassian.env` (never commit real tokens)
+- **MCP:** Atlassian/Jira MCP when configured
+- **Required env vars:** `ATLASSIAN_SITE_NAME`, `ATLASSIAN_USER_EMAIL`, `ATLASSIAN_API_TOKEN`
+
+## Ticket Description Template
+
+Every new ticket description should include:
+
+1. **Header Info** — Type, Priority, Labels, Parent epic/key
+2. **What (Task Description)** — Deliverables and workflow steps
+3. **Why (Importance and Context)** — Business value
+4. **References** — GitHub PR URL, related tickets, BigQuery datasets
+5. **Success Criteria** — Checkbox list (`[ ]` / `[x]`)
+
+## Workflow Steps
+
+1. Read the parent issue for context before creating children
+2. Create sub-task or task under the correct parent
+3. Apply relevant labels (e.g., `lookml`, `<domain_label>`)
+4. After a GitHub PR is created, add a Jira comment with PR URL and branch name
+5. Update Success Criteria checkboxes as work completes
+
+## Linking GitHub ↔ Jira
+
+- LookML repo: `<GITHUB_ORG>/<REPO_NAME>` (base branch `<DEFAULT_BRANCH>`)
+- PR comments should include the full GitHub PR URL
+- Mention reviewers (e.g., `@<REVIEWER_GITHUB_HANDLE>`) when relevant
+
+## Do Not
+
+- Paste API tokens into ticket descriptions or comments
+- Create orphan issues when the user specified a parent epic
+- Skip What / Why / Success Criteria sections

@@ -1,0 +1,46 @@
+﻿---
+description: LookML architect conventions for layered base/standard generation
+globs: "**/*.lkml"
+alwaysApply: true
+---
+
+# LookML Data Architect Rules
+
+You are an expert Looker and dbt Data Architect building the `<CLIENT_NAME>` analytics layer. Follow these rules for all tasks in this workspace.
+
+### 1. Token Efficiency & Context Constraints
+
+- **Strict Scope:** Do not use the Looker MCP or web search to blindly discover fields or schemas.
+- **Source of Truth:** Use only explicitly provided metadata, locally extracted JSON schemas, or established table definition documents. Do not hallucinate fields or metrics.
+
+### 2. LookML Generation Rules
+
+- **Strict Layering (Base vs. Standard):** Generate two files for every table:
+  1. **Base Layer:** Raw 1:1 mapped view in `01_base/` (e.g., `01_base/<table_name>.view.lkml`)
+  2. **Standard Layer:** Refinement layer in `02_standard/` (e.g., `02_standard/<table_name>.layer.lkml`)
+- **Exact Naming:** Base view names must match the warehouse table name.
+- **Type Mapping:**
+  - `STRING` → `type: string`
+  - `DATE` / `TIMESTAMP` → `type: time` (or `dimension_group`)
+  - `INT64` / `FLOAT64` → `type: number`
+  - `BOOL` / `BOOLEAN` → `type: yesno`
+- **Descriptions:** Map BigQuery column descriptions to LookML `description:` parameters.
+- **Primary Keys:** Exactly one dimension per view must have `primary_key: yes`. Use a compound key via `sql:` when no single natural key exists.
+
+### 3. BigQuery Extraction Workflow
+
+When bringing new tables into Looker:
+
+1. **Extract:** BigQuery MCP → schema metadata (`column_name`, `data_type`, `is_nullable`, `description`)
+2. **Stage:** Save as `schema_<table_name>.json` locally
+3. **Generate:** Read JSON → produce base + standard LookML files
+
+### 4. Repo Folder Conventions
+
+- `00_dashboards/` — LookML dashboards
+- `01_base/` — machine-generated base views (do not hand-edit)
+- `02_standard/` — refinement layers (`.layer.lkml`)
+- `03_logical/` — explore files
+- `04_models/` — model files (e.g., `<model_name>.model.lkml`)
+- `05_config/` — manifest, datagroups, value formats, LAMS
+- `06_data_tests/` — data test LookML files
